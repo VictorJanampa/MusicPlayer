@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
@@ -97,6 +96,7 @@ class MainActivity : AppCompatActivity() {
                 extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST).toString(),
                 extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR).toString(),
                 extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM).toString(),
+                extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE).toString(),
                 extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE).toString(),
                 embeddedPicture.toDrawable() ?: AppCompatResources.getDrawable(baseContext, R.drawable.albumart)
             )
@@ -112,7 +112,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId==R.id.song_detail_menu) {
-            startActivity(Intent(this,DetailsActivity::class.java))
+            intent = Intent(this,DetailsActivity::class.java).apply {
+                putExtra("key_title",songDetails.title)
+                putExtra("key_artist",songDetails.artist)
+                putExtra("key_album",songDetails.album)
+                putExtra("key_year",songDetails.year)
+                putExtra("key_bit_rate",songDetails.genre)
+                putExtra("key_bit_rate",songDetails.bitRate)
+            }
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

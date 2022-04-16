@@ -7,6 +7,7 @@ data class Song(
     var artist: String = "No Artist",
     var year: String = "",
     var album: String = "",
+    var genre: String = "",
     var bitRate: String = "",
     var cover: Drawable?
 )

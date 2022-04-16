@@ -7,7 +7,7 @@
 
     <data>
         <variable
-            name="SongDetails"
+            name="songDetails"
             type="com.example.musicplayer.song.Song" />
     </data>
 
@@ -93,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@={SongDetails.title}"
+            android:text="@={songDetails.title}"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -106,7 +106,7 @@
             android:id="@+id/artist_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@={SongDetails.artist}"
+            android:text="@={songDetails.artist}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:gravity="center"

@@ -4,7 +4,12 @@
     <string name="play_button">Play</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
-    <string name="title">Title</string>
     <string name="author">Author</string>
     <string name="song_details">Song Details</string>
+    <string name="title">Title</string>
+    <string name="artist">Artist</string>
+    <string name="album">Album</string>
+    <string name="year">Year</string>
+    <string name="genre">Genre</string>
+    <string name="bitrate">BitRate</string>
 </resources>
