@@ -5,6 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="SongDetails"
+            type="com.example.musicplayer.song.Song" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -31,82 +37,82 @@
                 app:layout_constraintVertical_bias="0.2"
                 tools:srcCompat="@drawable/albumart" />
 
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="24dp"
-                android:progress="50"
-                app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
-                app:layout_constraintTop_toBottomOf="@+id/author_textView" />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="24dp"
+            android:progress="50"
+            app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
+            app:layout_constraintTop_toBottomOf="@+id/artist_textView" />
 
-            <Button
-                android:id="@+id/skip_previous_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/ic_baseline_skip_previous_24"
-                android:contentDescription="@string/previous"
-                app:layout_constraintBottom_toBottomOf="@+id/play_pause_button"
-                app:layout_constraintEnd_toStartOf="@+id/play_pause_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
-                app:layout_constraintTop_toTopOf="@+id/play_pause_button" />
+        <Button
+            android:id="@+id/skip_previous_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_baseline_skip_previous_24"
+            android:contentDescription="@string/previous"
+            app:layout_constraintBottom_toBottomOf="@+id/play_pause_button"
+            app:layout_constraintEnd_toStartOf="@+id/play_pause_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
+            app:layout_constraintTop_toTopOf="@+id/play_pause_button" />
 
-            <Button
-                android:id="@+id/play_pause_button"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="64dp"
-                android:background="@drawable/ic_baseline_play_arrow_24"
-                android:contentDescription="@string/play_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/next_previous_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/skip_previous_button"
-                app:layout_constraintTop_toBottomOf="@+id/seekBar"
-                app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/play_pause_button"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="64dp"
+            android:background="@drawable/ic_baseline_play_arrow_24"
+            android:contentDescription="@string/play_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/skip_next_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/skip_previous_button"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar"
+            app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/next_previous_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/ic_baseline_skip_next_24"
-                android:contentDescription="@string/next"
-                app:layout_constraintBottom_toBottomOf="@+id/play_pause_button"
-                app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/play_pause_button"
-                app:layout_constraintTop_toTopOf="@+id/play_pause_button" />
+        <Button
+            android:id="@+id/skip_next_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_baseline_skip_next_24"
+            android:contentDescription="@string/next"
+            app:layout_constraintBottom_toBottomOf="@+id/play_pause_button"
+            app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/play_pause_button"
+            app:layout_constraintTop_toTopOf="@+id/play_pause_button" />
 
-            <TextView
-                android:id="@+id/title_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/title"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
-                app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
-                app:layout_constraintTop_toBottomOf="@+id/albumCoverImageView" />
+        <TextView
+            android:id="@+id/title_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@={SongDetails.title}"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
+            app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
+            app:layout_constraintTop_toBottomOf="@+id/albumCoverImageView" />
 
-            <TextView
-                android:id="@+id/author_textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/author"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
-                app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
-                app:layout_constraintTop_toBottomOf="@+id/title_textView" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/artist_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={SongDetails.artist}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@+id/albumCoverImageView"
+            app:layout_constraintStart_toStartOf="@+id/albumCoverImageView"
+            app:layout_constraintTop_toBottomOf="@+id/title_textView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 </layout>
