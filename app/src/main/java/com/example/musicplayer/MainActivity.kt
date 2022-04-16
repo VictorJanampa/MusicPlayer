@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private var currentSong: Int = 0
     private var playlistSize: Int = 0
+    private var wasPlaying: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.skipNextButton.setOnClickListener {
             currentSong = (currentSong+1) % songList.size
             mediaPlayer.release()
-            mediaPlayer = MediaPlayer.create(this, songList[currentSong]).apply {  }
+            mediaPlayer = MediaPlayer.create(this, songList[currentSong])
             playMusic()
             updateUI(songList)
         }
@@ -109,7 +110,15 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    // handling errors
+    override fun onDestroy() {
+        mediaPlayer.release()
+        super.onDestroy()
+    }
 }
+
+
 
 // Extension to convert a ByteArray to Drawable
 private fun ByteArray?.toDrawable(): Drawable? {
