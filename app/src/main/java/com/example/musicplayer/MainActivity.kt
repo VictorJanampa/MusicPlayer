@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.musicplayer.databinding.ActivityMainBinding
 import com.example.musicplayer.song.Song
 
+const val KEY_CURRENT_SONG = "key_current_song"
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,13 +28,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private var currentSong: Int = 0
     private var playlistSize: Int = 0
-    private var wasPlaying: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val songList = listOf(R.raw.hard_in_da_paint, R.raw.dreaming, R.raw.dreamer).also { playlistSize = it.size }
+
+        savedInstanceState?.let {
+            currentSong = it.getInt(KEY_CURRENT_SONG)
+        }
+
         songDetails = retrieveMetadata(songList[currentSong])
 
         binding.songDetails = songDetails
@@ -75,6 +80,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUI(songList: List<Int>) {
         songDetails = retrieveMetadata(songList[currentSong])
+        binding.songDetails = songDetails
         binding.albumCoverImageView.setImageDrawable(songDetails.cover)
     }
 
@@ -111,14 +117,17 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_CURRENT_SONG, currentSong)
+    }
+
     // handling errors
     override fun onDestroy() {
         mediaPlayer.release()
         super.onDestroy()
     }
 }
-
-
 
 // Extension to convert a ByteArray to Drawable
 private fun ByteArray?.toDrawable(): Drawable? {
