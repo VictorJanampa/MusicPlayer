@@ -11,11 +11,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.example.musicplayer.databinding.ActivityMainBinding
 import com.example.musicplayer.song.Song
+import kotlinx.coroutines.*
 
 const val KEY_CURRENT_SONG = "key_current_song"
 
@@ -25,8 +28,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var songDetails: Song
     private lateinit var mediaMetadataRetriever: MediaMetadataRetriever
     private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var updateSeekBar: Job
     private var currentSong: Int = 0
     private var playlistSize: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         binding.albumCoverImageView.setImageDrawable(songDetails.cover)
 
         mediaPlayer = MediaPlayer.create(this, songList[currentSong])
+
+        updateSeekBar = setSeekbar()
 
         binding.playPauseButton.setOnClickListener {
             if (!mediaPlayer.isPlaying) playMusic() else pauseMusic()
@@ -63,6 +70,19 @@ class MainActivity : AppCompatActivity() {
             updateUI(songList)
             playMusic()
         }
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                if (p2) {
+                    mediaPlayer.seekTo(p1)
+                }
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) { }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) { }
+        })
+
     }
     // functions to control the player
     private fun playMusic() {
@@ -78,6 +98,8 @@ class MainActivity : AppCompatActivity() {
     // Update UI
 
     private fun updateUI(songList: List<Int>) {
+        lifecycleScope.launch(Dispatchers.Main) { updateSeekBar.cancelAndJoin() }
+        updateSeekBar = setSeekbar()
         songDetails = retrieveMetadata(songList[currentSong])
         binding.songDetails = songDetails
         binding.albumCoverImageView.setImageDrawable(songDetails.cover)
@@ -134,6 +156,22 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         mediaPlayer.release()
         super.onDestroy()
+    }
+
+    private fun setSeekbar(): Job {
+        binding.seekBar.progress = 0
+        binding.seekBar.max = mediaPlayer.duration
+
+        mediaPlayer.setOnCompletionListener {
+            mediaPlayer.pause()
+        }
+
+        return lifecycleScope.launch(Dispatchers.Main){
+            while (true) {
+                binding.seekBar.progress = mediaPlayer.currentPosition
+                delay(1000L)
+            }
+        }
     }
 }
 
